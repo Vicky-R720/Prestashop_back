@@ -1,122 +1,146 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import ProductsPage from "./pages/ProductsPage";
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    <div>
+      <ProductsPage />
+    </div>
+  );
 }
 
-export default App
+export default App;
+// import './App.css'
+// import Sidebar from './components/Sidebar.jsx'
+
+// function App() {
+//   return (
+//     <div className="app">
+//       <Sidebar />
+
+//       <div className="main">
+//         <header className="topbar">
+//           <div>
+//             <p className="eyebrow">Welcome back</p>
+//             <h1>NewApp</h1>
+//           </div>
+//           <div className="topbar__actions">
+//             <label className="search" aria-label="Search">
+//               <span className="search__icon" aria-hidden="true">
+//                 <svg viewBox="0 0 24 24">
+//                   <circle cx="11" cy="11" r="7" />
+//                   <path d="M20 20l-3.5-3.5" />
+//                 </svg>
+//               </span>
+//               <input
+//                 className="search__input"
+//                 type="search"
+//                 placeholder="Search orders, products..."
+//               />
+//             </label>
+//             <button className="icon-button" type="button" aria-label="Notifications">
+//               <svg viewBox="0 0 24 24" aria-hidden="true">
+//                 <path d="M15 18a3 3 0 0 1-6 0" />
+//                 <path d="M18 16H6l1-1.6V10a5 5 0 0 1 10 0v4.4z" />
+//               </svg>
+//             </button>
+//           </div>
+//         </header>
+
+//         <main className="content">
+//           <section className="stats">
+//             <article className="card">
+//               <p className="card__label">Total Revenue</p>
+//               <p className="card__value">$128,430</p>
+//               <p className="card__trend is-up">+12.6% this month</p>
+//             </article>
+//             <article className="card">
+//               <p className="card__label">Orders</p>
+//               <p className="card__value">2,984</p>
+//               <p className="card__trend is-up">+4.2% this week</p>
+//             </article>
+//             <article className="card">
+//               <p className="card__label">New Customers</p>
+//               <p className="card__value">324</p>
+//               <p className="card__trend is-up">+9.1% in 7 days</p>
+//             </article>
+//             <article className="card">
+//               <p className="card__label">Pending Shipments</p>
+//               <p className="card__value">38</p>
+//               <p className="card__trend">3 need attention</p>
+//             </article>
+//           </section>
+
+//           <section className="grid">
+//             <div className="panel">
+//               <div className="panel__header">
+//                 <div>
+//                   <h2>Recent Orders</h2>
+//                   <p className="panel__subtitle">Latest activity from your store</p>
+//                 </div>
+//                 <button className="panel__action" type="button">View all</button>
+//               </div>
+//               <div className="table">
+//                 <div className="table__row table__head">
+//                   <span>Order</span>
+//                   <span>Customer</span>
+//                   <span>Status</span>
+//                   <span>Amount</span>
+//                 </div>
+//                 <div className="table__row">
+//                   <span>#PS-4821</span>
+//                   <span>Olivia Lambert</span>
+//                   <span className="status is-paid">Paid</span>
+//                   <span>$2,480</span>
+//                 </div>
+//                 <div className="table__row">
+//                   <span>#PS-4816</span>
+//                   <span>Noah Carter</span>
+//                   <span className="status is-shipping">Shipping</span>
+//                   <span>$860</span>
+//                 </div>
+//                 <div className="table__row">
+//                   <span>#PS-4809</span>
+//                   <span>Sophia Reyes</span>
+//                   <span className="status is-pending">Pending</span>
+//                   <span>$320</span>
+//                 </div>
+//                 <div className="table__row">
+//                   <span>#PS-4801</span>
+//                   <span>Leo Bianchi</span>
+//                   <span className="status is-paid">Paid</span>
+//                   <span>$1,190</span>
+//                 </div>
+//               </div>
+//             </div>
+
+//             <div className="panel">
+//               <div className="panel__header">
+//                 <div>
+//                   <h2>Sales Overview</h2>
+//                   <p className="panel__subtitle">Revenue trend placeholder</p>
+//                 </div>
+//                 <button className="panel__action" type="button">Last 30 days</button>
+//               </div>
+//               <div className="chart">
+//                 <div className="chart__bars">
+//                   <span></span>
+//                   <span></span>
+//                   <span></span>
+//                   <span></span>
+//                   <span></span>
+//                   <span></span>
+//                 </div>
+//                 <p className="chart__label">Chart placeholder</p>
+//               </div>
+//             </div>
+//           </section>
+//         </main>
+//       </div>
+//     </div>
+//   )
+// }
+
+// export default App
+
+
