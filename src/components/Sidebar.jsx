@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+
+
 function Sidebar() {
   return (
     <aside className="sidebar">
@@ -10,13 +13,13 @@ function Sidebar() {
       </div>
 
       <nav className="nav" aria-label="Primary">
-        <button className="nav-item is-active" type="button">
+        <button className="nav-item" type="button">
           <span className="nav-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" />
             </svg>
           </span>
-          Dashboard
+          <Link to="/">Dashboard</Link>
         </button>
         <button className="nav-item" type="button">
           <span className="nav-icon">
@@ -25,7 +28,7 @@ function Sidebar() {
               <path d="M4 6l3-3h10l3 3" />
             </svg>
           </span>
-          Products
+          <Link to="/products">Produits</Link>
         </button>
         <button className="nav-item" type="button">
           <span className="nav-icon">
