@@ -63,7 +63,7 @@ function ProductDetailsPage() {
             <p><strong>Reference:</strong> {product.reference}</p>
             <p><strong>Prix HT:</strong> {product.price_ht}</p>
             <p><strong>Prix TTC:</strong> {product.price_ttc}</p>
-            <p><strong>Actif:</strong> {product.active === 1 ? "Oui" : "Non"}</p>
+            <p><strong>Actif:</strong> {product.active === "1" ? "Oui" : "Non"}</p>
             <p><strong>Quantité:</strong> {product.quantity}</p>
             <p><strong>Etat:</strong> {product.condition}</p>
 

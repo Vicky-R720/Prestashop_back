@@ -65,9 +65,12 @@ export async function getProductById(id) {
 
     // Helper simple pour extraire le texte
     const getText = (v) => {
-        if (typeof v === "string") return v;
+        if (v === null || v === undefined) return "";
+        if (typeof v === "string" || typeof v === "number" || typeof v === "boolean") {
+            return String(v);
+        }
         if (Array.isArray(v)) return getText(v[0]);
-        return v?.["#text"] ?? "";
+        return v["#text"] ?? "";
     };
 
     // Dans getProductById()

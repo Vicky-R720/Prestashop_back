@@ -37,7 +37,7 @@ function Sidebar() {
               <path d="M9 10a3 3 0 0 0 6 0" />
             </svg>
           </span>
-          Orders
+          <Link to="/commande">commande</Link>
         </button>
         <button className="nav-item" type="button">
           <span className="nav-icon">

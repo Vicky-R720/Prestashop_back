@@ -5,6 +5,7 @@ import MainLayout from "./layouts/MainLayout";
 import DashboardPage from "./pages/DashboardPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
+import CommandePage from "./pages/commandePage";
 import "./App.css";
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
           <Route path="/products" element={<ProductsPage />} />
 
           <Route path="/products/:id" element={<ProductDetailsPage />} />
+          
+          <Route path="/commande" element={<CommandePage/>}/>
           
         </Route>
 
