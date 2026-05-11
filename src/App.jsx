@@ -10,7 +10,8 @@ import CommandesDetail from "./components/CommandesDetail";
 import "./App.css";
 import LoginPage from "./pages/LoginPages";
 import RequireAuth from "./components/RequireAuth";
-import ResetPage from "./pages/ResetPage";  
+import ResetPage from "./pages/ResetPage"; 
+import ImportPage from "./pages/ImportPage"; 
 
 function App() {
 
@@ -32,6 +33,8 @@ function App() {
           <Route path="/orders/:id" element={<CommandesDetail />} />
 
           <Route path="/reset" element={<ResetPage />} />
+
+          <Route path="/import" element={<ImportPage />} />
         </Route>
       </Routes>
 

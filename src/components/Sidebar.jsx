@@ -57,7 +57,7 @@ function Sidebar() {
               <path d="M22 20V8" />
             </svg>
           </span>
-          Analytics
+          <Link to="/import">import</Link>
         </button>
         <button className="nav-item" type="button">
           <span className="nav-icon">
