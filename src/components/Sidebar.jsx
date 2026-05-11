@@ -46,7 +46,7 @@ function Sidebar() {
               <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4z" />
             </svg>
           </span>
-          Customers
+          <Link to="/reset">reset</Link>
         </button>
         <button className="nav-item" type="button">
           <span className="nav-icon">
@@ -80,8 +80,14 @@ function Sidebar() {
       <div className="profile">
         <div className="profile__avatar">AM</div>
         <div>
-          <p className="profile__name">Alex Morgan</p>
-          <p className="profile__role">Store Manager</p>
+          <button
+            onClick={() => {
+              localStorage.removeItem("token");
+              window.location.href = "/login";
+            }}
+          >
+            Déconnexion
+          </button>
         </div>
       </div>
     </aside>

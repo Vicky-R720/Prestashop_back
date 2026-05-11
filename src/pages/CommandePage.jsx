@@ -2,14 +2,17 @@ import { useEffect, useState } from "react";
 import CommandesTable from "../components/CommandesTable";
 import { getCommande } from "../services/commandeApi";
 
+
 function CommandePage() {
 
-    const [commandes,setCommandes] = useState([]);
+    const [commandes, setCommandes] = useState([]);
+
 
     useEffect(() => {
 
         async function loadCommande() {
             const data = await getCommande();
+
             setCommandes(data);
         }
 
@@ -17,10 +20,14 @@ function CommandePage() {
     }, []);
 
     return (
+
         <div>
             <h2>Liste des commandes</h2>
-            <CommandesTable commandes={commandes}/>
+            <CommandesTable commandes={commandes} />
+
         </div>
+
+
     )
 
 }

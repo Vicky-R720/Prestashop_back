@@ -38,8 +38,6 @@ export async function getProducts() {
 
             const product = detailData.prestashop.product;
 
-
-
             return {
                 id: product.id,
                 name: product.name?.language?.["#text"] || "N/A",

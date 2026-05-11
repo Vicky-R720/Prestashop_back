@@ -6,27 +6,33 @@ import DashboardPage from "./pages/DashboardPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import CommandePage from "./pages/commandePage";
+import CommandesDetail from "./components/CommandesDetail";
 import "./App.css";
+import LoginPage from "./pages/LoginPages";
+import RequireAuth from "./components/RequireAuth";
+import ResetPage from "./pages/ResetPage";  
 
 function App() {
 
   return (
     <BrowserRouter>
-
       <Routes>
+        <Route path="/login" element={<LoginPage />} />
 
-        <Route element={<MainLayout />}>
+        <Route element={<RequireAuth><MainLayout /></RequireAuth>}>
 
           <Route path="/" element={<DashboardPage />} />
 
           <Route path="/products" element={<ProductsPage />} />
 
           <Route path="/products/:id" element={<ProductDetailsPage />} />
-          
-          <Route path="/commande" element={<CommandePage/>}/>
-          
-        </Route>
 
+          <Route path="/commande" element={<CommandePage />} />
+
+          <Route path="/orders/:id" element={<CommandesDetail />} />
+
+          <Route path="/reset" element={<ResetPage />} />
+        </Route>
       </Routes>
 
     </BrowserRouter>

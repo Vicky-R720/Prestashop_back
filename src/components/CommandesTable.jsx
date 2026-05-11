@@ -28,7 +28,7 @@ function CommandesTable({ commandes }) {
                         <td>{c.id}</td>
                         <td>{c.reference}</td>
                         <td>{c.valid === "1" ? "Oui" : "Non"}</td>
-                        <td>{c.delivery_date || "-"}</td>
+                        <td>{c.delivery_address || "-"}</td>
                         <td>{c.id_customer}</td>
                         <td>{c.total_paid_tax_incl}</td>
                         <td>{c.payment}</td>
