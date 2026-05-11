@@ -116,7 +116,6 @@ export async function getOrdersId() {
     const data = parser.parse(xml);
 
     const orders = data?.prestashop?.orders?.order;
-    console.log("parsed:", data?.prestashop?.orders?.order);
     const list = Array.isArray(orders) ? orders : orders ? [orders] : [];
 
     return list.map((c) => {

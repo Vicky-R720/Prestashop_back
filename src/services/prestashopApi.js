@@ -95,3 +95,35 @@ export async function getProductById(id) {
     };
 
 }
+
+export async function getProduitId() {
+    const response = await fetch(`/Eval/api/products`, { headers });
+    const xml = await response.text();
+    const data = parser.parse(xml);
+
+    const produit = data?.prestashop?.products?.product;
+    const list = Array.isArray(produit) ? produit: produit ? [produit] : [];
+
+    return list.map((c) => {
+        const id =
+            c["@_id"] ??
+            c.id ??
+            (c["@_xlink:href"] ? c["@_xlink:href"].split("/").pop() : "");
+        return String(id || "");
+    });
+}
+
+export async function deleteAllProducts() {
+    const ids = await getProduitId();
+    const results = [];
+
+    for (const id of ids){
+        const res = await fetch(`/Eval/api/products/${id}`, {
+            method: "DELETE",
+            headers,
+        });
+
+        results.push({id, ok: res.ok, status: res.status});
+    }
+    return results;
+}
