@@ -1,16 +1,21 @@
-:root {
-  --bg: #f5f7fb;
-  --panel: #ffffff;
-  --panel-muted: #f1f4f9;
-  --text: #0f172a;
-  --text-muted: #5b6472;
-  --border: #e3e7ef;
-  --accent: #3b82f6;
-  --accent-strong: #2563eb;
-  --radius: 18px;
-  --shadow: 0 18px 40px -28px rgba(15, 23, 42, 0.3);
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
-  font: 16px/160% system-ui, 'Segoe UI', sans-serif;
+:root {
+  --bg: #f6f2f1;
+  --bg-alt: #f1eef4;
+  --surface: #ffffff;
+  --surface-muted: #f6f3f7;
+  --text: #1c182b;
+  --muted: #6b667a;
+  --border: rgba(20, 18, 34, 0.08);
+  --accent: #e11d48;
+  --accent-strong: #7c3aed;
+  --accent-soft: rgba(225, 29, 72, 0.12);
+  --radius: 18px;
+  --shadow: 0 24px 50px -35px rgba(26, 19, 44, 0.45);
+  --shadow-soft: 0 16px 40px -30px rgba(26, 19, 44, 0.3);
+
+  font: 16px/160% "Manrope", "Segoe UI", sans-serif;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -21,11 +26,23 @@
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at top left, rgba(225, 29, 72, 0.12), transparent 40%),
+    radial-gradient(circle at 30% 20%, rgba(124, 58, 237, 0.12), transparent 45%),
+    linear-gradient(135deg, var(--bg), var(--bg-alt));
+  min-height: 100vh;
+}
+
+body,
+button,
+input,
+textarea {
+  font-family: "Manrope", "Segoe UI", sans-serif;
 }
 
 #root {
@@ -33,20 +50,25 @@ body {
 }
 
 h1,
-h2 {
-  margin: 0;
-  font-weight: 600;
+h2,
+h3,
+h4 {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
   color: var(--text);
 }
 
-h1 {
-  font-size: clamp(1.6rem, 2.2vw, 2.1rem);
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-h2 {
-  font-size: 1.1rem;
+img {
+  max-width: 100%;
+  display: block;
 }
 
-p {
-  margin: 0;
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
 }

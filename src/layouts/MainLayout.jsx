@@ -1,27 +1,16 @@
-import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
 
-function MainLayout() {
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
+export default function MainLayout() {
   return (
-    <div className="app">
-
-      <Sidebar />
-
-      <div className="main">
-
-        <header className="topbar">
-          <h1>NewApp</h1>
-        </header>
-
-        <main className="content">
-          <Outlet />
-        </main>
-
-      </div>
-
+    <div className="app-shell">
+      <Navbar />
+      <main className="main-content">
+        <Outlet />
+      </main>
+      <Footer />
     </div>
   );
 }
-
-export default MainLayout;
