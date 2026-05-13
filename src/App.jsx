@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
+import ProductListingPage from "./pages/ProductListingPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
 import AuthPage from "./pages/AuthPage";
 import WishlistPage from "./pages/WishlistPage";
@@ -16,6 +18,10 @@ function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="/products">
+            <Route index element={<ProductListingPage />} />
+            <Route path=":id" element={<ProductDetailPage />} />
+          </Route>
           <Route path="/cart" element={<CartPage />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/wishlist" element={<WishlistPage />} />

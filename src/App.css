@@ -556,6 +556,37 @@
   box-shadow: var(--shadow-soft);
 }
 
+.option-row {
+  display: grid;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.option-row__label {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.option-row input {
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  background: var(--surface-muted);
+  color: var(--text);
+  width: min(100%, 260px);
+}
+
+.option-row input:focus {
+  outline: 2px solid rgba(225, 29, 72, 0.35);
+  border-color: transparent;
+}
+
+.button--add {
+  padding: 12px 22px;
+  letter-spacing: 0.02em;
+}
+
 .price-row {
   display: flex;
   align-items: center;
@@ -699,6 +730,43 @@
 .link-button {
   font-size: 0.85rem;
   color: var(--accent);
+}
+
+.cart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--muted);
+  background: var(--surface);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+}
+
+.cart-message {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #16a34a;
+  animation: fade-up 0.3s ease;
+}
+
+.cart-item__price-unit {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.button--success {
+  background: linear-gradient(135deg, #16a34a, #15803d) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+.button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none !important;
 }
 
 .summary {
