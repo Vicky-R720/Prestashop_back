@@ -10,7 +10,10 @@ export default function ProductCard({ product }) {
   return (
     <article className="product-card">
       <div className="product-card__media">
-        <img src={product.images[0]} alt={product.name} />
+        <Link to={`/products/${product.id}`} className="product-card__name">
+          <img src={product.images[0]} alt={product.name} />
+        </Link>
+
         <span className="badge">{product.badge}</span>
         <button
           className={
@@ -25,9 +28,9 @@ export default function ProductCard({ product }) {
       </div>
       <div className="product-card__info">
         <div>
-          <Link to={`/products/${product.id}`} className="product-card__name">
-            {product.name}
-          </Link>
+
+          {product.name}
+
           <RatingStars value={product.rating} count={product.reviews} />
         </div>
         <div className="product-card__footer">
