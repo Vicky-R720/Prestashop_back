@@ -128,17 +128,77 @@ export async function getOrdersId() {
 }
 
 export async function deleteAllOrders() {
-  const ids = await getOrdersId();
-  const results = [];
+    const ids = await getOrdersId();
+    const results = [];
 
-  for (const id of ids) {
-    const res = await fetch(`/Eval/api/orders/${id}`, {
-      method: "DELETE",
-      headers,
+    for (const id of ids) {
+        const res = await fetch(`/Eval/api/orders/${id}`, {
+            method: "DELETE",
+            headers,
+        });
+
+        results.push({ id, ok: res.ok, status: res.status });
+    }
+
+    return results;
+}
+
+export async function updateOrderState(orderId, stateId) {
+    const xml = `
+    <prestashop>
+      <order_history>
+        <id_order>${orderId}</id_order>
+        <id_order_state>${stateId}</id_order_state>
+      </order_history>
+    </prestashop>
+  `.trim();
+
+    const res = await fetch("/Eval/api/order_histories", {
+        method: "POST",
+        headers: {
+            ...headers,
+            "Content-Type": "application/xml",
+        },
+        body: xml,
     });
 
-    results.push({ id, ok: res.ok, status: res.status });
-  }
+    if (!res.ok) {
+        throw new Error("Failed to update order state");
+    }
+}
 
-  return results;
+export async function getOrderStates(languageId = "1") {
+    const res = await fetch("/Eval/api/order_states", { headers });
+    const xml = await res.text();
+    const data = parser.parse(xml);
+
+    const states = data?.prestashop?.order_states?.order_state;
+    const list = Array.isArray(states) ? states : states ? [states] : [];
+
+    const ids = list.map((s) => {
+        const id =
+            s["@_id"] ??
+            s.id ??
+            (s["@_xlink:href"] ? s["@_xlink:href"].split("/").pop() : "");
+        return String(id || "");
+    }).filter(Boolean);
+
+    const details = await Promise.all(
+        ids.map(async (id) => {
+            const detailRes = await fetch(`/Eval/api/order_states/${id}`, { headers });
+            const detailXml = await detailRes.text();
+            const detailData = parser.parse(detailXml);
+            const state = detailData?.prestashop?.order_state;
+
+            // name peut etre un tableau de <language>
+            const nameNode = state?.name?.language;
+            const nameList = Array.isArray(nameNode) ? nameNode : nameNode ? [nameNode] : [];
+            const nameForLang = nameList.find((n) => String(n?.["@_id"]) === String(languageId));
+            const name = getText(nameForLang ?? nameList[0]);
+
+            return { id: getText(state?.id), name };
+        })
+    );
+
+    return details;
 }

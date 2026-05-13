@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getCommandeById } from "../services/commandeApi";
+import { getCommandeById, getOrderStates, updateOrderState } from "../services/commandeApi";
 import { getCustomerById } from "../services/custommersApi";
 
 function CommandesDetail() {
 	const { id } = useParams();
 	const [commande, setCommande] = useState(null);
 	const [customer, setCustomer] = useState(null);
+	const [orderStates, setOrderStates] = useState([]);
+	const [selectedStateId, setSelectedStateId] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
+	const [isUpdating, setIsUpdating] = useState(false);
 	const [error, setError] = useState("");
+	const [updateError, setUpdateError] = useState("");
 
 	const formatDateTime = (value) => {
 		if (!value) return "-";
@@ -42,6 +46,7 @@ function CommandesDetail() {
 
 				const data = await getCommandeById(id);
 				setCommande(data);
+				setSelectedStateId(data?.current_state || "");
 
 				if (data?.id_customer) {
 					const customerData = await getCustomerById(data.id_customer);
@@ -60,6 +65,41 @@ function CommandesDetail() {
 			loadDetail();
 		}
 	}, [id]);
+
+	useEffect(() => {
+		async function loadStates() {
+			try {
+				const states = await getOrderStates();
+				setOrderStates(states);
+			} catch {
+				setOrderStates([]);
+			}
+		}
+
+		loadStates();
+	}, []);
+
+	const handleStateChange = async (event) => {
+		const nextStateId = event.target.value;
+		setSelectedStateId(nextStateId);
+		setUpdateError("");
+
+		if (!commande?.id || !nextStateId) return;
+
+		try {
+			setIsUpdating(true);
+			await updateOrderState(commande.id, nextStateId);
+			const refreshed = await getCommandeById(commande.id);
+			setCommande(refreshed);
+			setSelectedStateId(refreshed?.current_state || nextStateId);
+		} catch {
+			setUpdateError("Impossible de mettre a jour l'etat de la commande.");
+		} finally {
+			setIsUpdating(false);
+		}
+	};
+
+	const currentStateName = orderStates.find((state) => state.id === commande?.current_state)?.name;
 
 	if (isLoading) {
 		return <p>Chargement...</p>;
@@ -81,9 +121,27 @@ function CommandesDetail() {
 			<p><strong>Client:</strong> {commande.id_customer}</p>
 			<p><strong>Total TTC:</strong> {commande.total_paid_tax_incl}</p>
 			<p><strong>Paiement:</strong> {commande.payment}</p>
-			<p><strong>Etat:</strong> {commande.current_state}</p>
+			<p><strong>Etat:</strong> {currentStateName || commande.current_state}</p>
 			<p><strong>Date:</strong> {commande.date_add}</p>
 			<p><strong>Livraison:</strong> {commande.delivery_address || "-"}</p>
+
+			<label>
+				Modifier l'etat:
+				<select
+					value={selectedStateId}
+					onChange={handleStateChange}
+					disabled={isUpdating || orderStates.length === 0}
+				>
+					<option value="">Selectionner un etat</option>
+					{orderStates.map((state) => (
+						<option key={state.id} value={state.id}>
+							{state.name || state.id}
+						</option>
+					))}
+				</select>
+			</label>
+			{isUpdating && <p>Mise a jour en cours...</p>}
+			{updateError && <p>{updateError}</p>}
 
 			<h3>Client</h3>
 
