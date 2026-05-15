@@ -38,37 +38,41 @@ function getCartId() {
 
 // ─── Créer / Mettre à jour en créant un nouveau panier ─────────
 
+function buildCartXml(items = [], extraFields = "") {
+        const rowsXml = items
+                .filter((item) => item.quantity > 0)
+                .map(
+                        (item) => `
+                <cart_row>
+                    <id_product>${item.id_product}</id_product>
+                    <id_product_attribute>${item.id_product_attribute || "0"}</id_product_attribute>
+                    <quantity>${item.quantity}</quantity>
+                </cart_row>`
+                )
+                .join("");
+
+        return `<?xml version="1.0" encoding="UTF-8"?>
+<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
+    <cart>
+        <id_currency>1</id_currency>
+        <id_lang>1</id_lang>
+        ${extraFields}
+        ${
+                rowsXml
+                        ? `<associations>
+            <cart_rows>${rowsXml}</cart_rows>
+        </associations>`
+                        : ""
+        }
+    </cart>
+</prestashop>`;
+}
+
 /** Crée un nouveau panier avec les items fournis via POST */
 async function sauvegarderPanier(items = []) {
-    // Construire les lignes XML
-    const rowsXml = items
-        .filter((item) => item.quantity > 0)
-        .map(
-            (item) => `
-        <cart_row>
-          <id_product>${item.id_product}</id_product>
-          <id_product_attribute>${item.id_product_attribute || "0"}</id_product_attribute>
-          <quantity>${item.quantity}</quantity>
-        </cart_row>`
-        )
-        .join("");
+        const xml = buildCartXml(items);
 
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
-  <cart>
-    <id_currency>1</id_currency>
-    <id_lang>1</id_lang>
-    ${
-        rowsXml
-            ? `<associations>
-      <cart_rows>${rowsXml}</cart_rows>
-    </associations>`
-            : ""
-    }
-  </cart>
-</prestashop>`;
-
-    const response = await fetch("/Eval/api/carts", {
+    const response = await fetch("/api/carts", {
         method: "POST",
         headers: {
             ...headers,
@@ -90,6 +94,42 @@ async function sauvegarderPanier(items = []) {
     return id;
 }
 
+/** Crée un panier lie a un client et une adresse (pour la commande) */
+export async function creerPanierPourCommande(
+    items = [],
+    idCustomer,
+    idAddressDelivery,
+    idAddressInvoice = idAddressDelivery
+) {
+    const extraFields = `
+    <id_customer>${idCustomer}</id_customer>
+    <id_address_delivery>${idAddressDelivery}</id_address_delivery>
+    <id_address_invoice>${idAddressInvoice}</id_address_invoice>`;
+
+    const xml = buildCartXml(items, extraFields);
+
+    const response = await fetch("/api/carts", {
+        method: "POST",
+        headers: {
+            ...headers,
+            "Content-Type": "application/xml",
+        },
+        body: xml,
+    });
+
+    if (!response.ok) {
+        const errText = await response.text();
+        console.error("Erreur creation panier commande:", errText);
+        throw new Error("Impossible de creer le panier de commande");
+    }
+
+    const data = parser.parse(await response.text());
+    const id = getText(data.prestashop.cart.id);
+
+    saveCartId(id);
+    return id;
+}
+
 // ─── Récupérer le panier ───────────────────────────────────────
 
 /** Récupère le contenu du panier depuis l'API */
@@ -97,7 +137,7 @@ export async function getPanier() {
     const cartId = getCartId();
     if (!cartId) return null;
 
-    const response = await fetch(`/Eval/api/carts/${cartId}`, { headers });
+    const response = await fetch(`/api/carts/${cartId}`, { headers });
 
     if (!response.ok) {
         // Le panier n'existe plus, on nettoie

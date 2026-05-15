@@ -12,7 +12,7 @@ const STATIC_FALLBACK =
 
 const buildImageUrl = (p) => {
     if (p?.id && p?.id_default_image) {
-        return `/Eval/api/images/products/${p.id}/${p.id_default_image}?ws_key=${import.meta.env.VITE_PRESTASHOP_API_KEY}`;
+        return `/api/images/products/${p.id}/${p.id_default_image}?ws_key=${import.meta.env.VITE_PRESTASHOP_API_KEY}`;
     }
     return STATIC_FALLBACK;
 };

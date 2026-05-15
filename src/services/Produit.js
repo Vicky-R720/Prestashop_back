@@ -21,7 +21,7 @@ const getText = (v) => {
 };
 
 export async function getProducts() {
-    const response = await fetch(`/Eval/api/products`, {
+    const response = await fetch(`/api/products`, {
         headers,
     });
 
@@ -45,7 +45,7 @@ export async function getProducts() {
 
             const id = p["@_id"];
 
-            const res = await fetch(`/Eval/api/products/${id}`, {
+            const res = await fetch(`/api/products/${id}`, {
                 headers,
             });
 
@@ -75,7 +75,7 @@ export async function getProducts() {
 }
 
 export async function getProductById(id) {
-    const response = await fetch(`/Eval/api/products/${id}`, {
+    const response = await fetch(`/api/products/${id}`, {
         headers,
     });
 
@@ -116,7 +116,7 @@ export async function getProductById(id) {
 }
 
 export async function getProduitId() {
-    const response = await fetch(`/Eval/api/products`, { headers });
+    const response = await fetch(`/api/products`, { headers });
     const xml = await response.text();
     const data = parser.parse(xml);
 
@@ -137,7 +137,7 @@ export async function deleteAllProducts() {
     const results = [];
 
     for (const id of ids){
-        const res = await fetch(`/Eval/api/products/${id}`, {
+        const res = await fetch(`/api/products/${id}`, {
             method: "DELETE",
             headers,
         });
@@ -151,7 +151,7 @@ const STATIC_FALLBACK = "/placeholder.png";
 
 const buildImageUrl = (p) => {
     if (p?.id && p?.id_default_image) {
-        return `/Eval/api/images/products/${p.id}/${p.id_default_image}?ws_key=${import.meta.env.VITE_PRESTASHOP_API_KEY}`;
+        return `/api/images/products/${p.id}/${p.id_default_image}?ws_key=${import.meta.env.VITE_PRESTASHOP_API_KEY}`;
     }
 
     return STATIC_FALLBACK;

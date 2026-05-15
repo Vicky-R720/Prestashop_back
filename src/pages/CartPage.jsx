@@ -11,7 +11,7 @@ const STATIC_FALLBACK = "/placeholder.png";
 /** Construit l'URL d'image d'un produit */
 function buildImageUrl(product) {
     if (product?.id && product?.id_default_image) {
-        return `/Eval/api/images/products/${product.id}/${product.id_default_image}?ws_key=${import.meta.env.VITE_PRESTASHOP_API_KEY}`;
+        return `/api/images/products/${product.id}/${product.id_default_image}?ws_key=${import.meta.env.VITE_PRESTASHOP_API_KEY}`;
     }
     return STATIC_FALLBACK;
 }
@@ -40,8 +40,10 @@ export default function CartPage() {
                         const product = await getProductById(row.id_product);
                         return {
                             id_product: row.id_product,
+                            id_product_attribute: row.id_product_attribute,
                             quantity: row.quantity,
                             name: product.name || "Produit",
+                            reference: product.reference || "",
                             price: parseFloat(product.price_ttc) || 0,
                             image: buildImageUrl(product),
                             description: product.description_short || "",
@@ -148,7 +150,11 @@ export default function CartPage() {
                             <span>Total</span>
                             <strong>{total.toFixed(2)} EUR</strong>
                         </div>
-                        <button className="button button--primary">
+                        <button
+                            className="button button--primary"
+                            onClick={() => navigate("/checkout")}
+                            type="button"
+                        >
                             Commander
                         </button>
                         <button
