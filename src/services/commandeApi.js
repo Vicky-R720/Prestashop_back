@@ -44,8 +44,6 @@ export async function getCommande() {
         headers,
     });
 
-
-
     const xml = await response.text();
 
     const data = parser.parse(xml)
